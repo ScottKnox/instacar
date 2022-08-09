@@ -1,0 +1,93 @@
+Functional Decomposition
+
+----------------------------
+
+Users
+
+Given an Admin has logged into Instacar
+When the Admin navigates to the home page
+Then they should see the Admin console
+
+Given a Customer has logged into Instacar
+When the Customer navigates to the home page
+Then they should see the Vehicle listing pane
+
+Given a Customer has logged into Instacar
+When the Customer navigates to their Account page
+And Customer updates their Shipping Address to valid Address
+Then they should see Address updated page
+
+Operations
+
+Given a Vehicle purchase with only cash price
+When Customer submits valid bank account information
+	And external bank transfer API succesfully verifies funds
+	And Customer Confirms the Transaction
+Then the Vehicle is removed from listings
+	And external bank transfer API successfully executes the transfer
+	And the Customer Account is updated with Transaction
+	And a Notification of Order is emailed to Customer
+
+Given a Vehicle purchase with only financing
+When Customer submits valid social security number
+	And external bank credit report API successfully returns Customer Credit Info
+	And Customer selects a Payment Plan
+	And Customer confirms the Transaction
+Then the Vehicle is removed from listings
+	And external bank loan API successfully creates loan account
+	And the Customer Account is updated with Transaction
+	And a Notification of Order is emailed to Customer
+	And a Notification of Account is emailed to Customer
+
+Given a Vehicle purchase with cash and financing
+When Customer submits valid social security number
+	And external bank credit report API successfully returns Customer Credit Info
+	And Customer chooses Financing Option
+	And Customer submits valid bank account information
+	And external bank transfer API succesfully verifies funds
+	And Customer confirms the Transaction
+Then the Vehicle is removed from listings
+	And external bank transfer API successfully executes the transfer
+	And external bank loan API successfully creates loan account
+	And the Customer Account is updated with Transaction
+	And a Notification of Order is emailed to Customer
+	And a Notification of Account is emailed to Customer
+
+----------------------------
+
+Class / Responsibilities 
+
+----------------------------
+
+Customer - Purchases Vehicles
+Admin - Lists Vehicles for sale
+Vehicle - Cars, Trucks, and Vans to be shipped to customers on purchase
+Transaction - Details and amounts for a Vehicle purchase
+Account - Stores details like Customer info, Shipping Address, and Transactions
+Shipping Address - Address vehicle should be shipped to upon purchase
+Credit Information - A customer's credit score and related details
+Payment Plan - A payment plan offered to a Customer
+Order - The full order details that can be retrieved by a Customer; amounts, shipping address, personal info
+Notification - An email sent to notify Customers/Admins of important events
+
+----------------------------
+
+Business Capabilities 
+
+----------------------------
+
+User Management - Creating / Managing User data for Customers and Admins
+Vehicle Management - Creating / Managing Vehicle data
+Account Management - Managing personal info, Orders and Transaction Details, Credit and Payment info
+Notification Management - Handling of Notifications to be sent for various system events
+
+----------------------------
+
+Services
+
+----------------------------
+
+User Service
+Vehicle Service
+Account Service
+Notification Service
